@@ -39,8 +39,23 @@
 	{% endfor %}
 	<!-- 分页 -->
 	<ul class="pager">
-		<li class="previous"><a href="#"><span aria-hidden="true">&larr;</span> 上一页</a></li>
-		<li class="next"><a href="#">下一页 <span aria-hidden="true">&rarr;</span></a></li>
+		{% if articles.has_previous %}
+		<li class="previous">
+			<a href="?page=1">&laquo; 首页</a>
+			<a href="?page={{ articles.previous_page_number }}"><span aria-hidden="true">&larr;</span> 上一页</a>
+		</li>
+		{% endif %}
+		<!-- <span class="current">
+			Page {{ articles.number }} of {{ articles.paginator.num_pages }}
+		</span> -->
+		{% for current_page in articles.paginator.page_range %}
+		<li><a href="?page={{ current_page }}">{{ current_page }}</a></li>
+		{% endfor %}
+		{% if articles.has_next %}
+		<li class="next">
+			<a href="?page={{ articles.next_page_number }}">下一页 <span aria-hidden="true">&rarr;</span></a>
+		</li>
+		{% endif %}
 	</ul>
 </div>
 {% include 'common/aside.html' %}
